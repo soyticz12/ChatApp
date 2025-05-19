@@ -1,4 +1,5 @@
 using ChatApi.Model;
+using ChatApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Supabase;
 
@@ -6,15 +7,20 @@ namespace ChatApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ConversationsController(Client client) : ControllerBase
+public class ConversationsController : ControllerBase
 {
-    private static readonly List<Message> _messages = new ();
-    private readonly Client _client = client;
+   private readonly ConversationRepository _conversationRepository;
 
-    [HttpGet]
-    public IActionResult GetConversations()
+    // DI will inject the ConversationRepository here
+    public ConversationsController(ConversationRepository conversationRepository)
     {
-        return Ok(new { Message = "List of conversations" });
+        _conversationRepository = conversationRepository;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetConversations()
+    {
+        var conversations = await _conversationRepository.GetConversationsAsync();
+        return Ok(conversations);
+    }
 }

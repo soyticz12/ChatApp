@@ -1,8 +1,9 @@
 using ChatApi.Interface;
+using Supabase.Postgrest.Models;
 
 namespace ChatApi.Model;
 
-public record Message : IMessage
+public class Message : BaseModel, IMessage
 {
     public Guid ConversationId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public Guid SenderId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
