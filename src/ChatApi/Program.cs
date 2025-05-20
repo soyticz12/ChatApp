@@ -1,3 +1,5 @@
+using ChatApi.Interface;
+using ChatApi.Repository;
 using Supabase;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,14 +9,18 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped(_ =>
 new Client(
-    builder.Configuration["SupabaseUrl"],
-    builder.Configuration["SupabaseKey"],
+    builder.Configuration["Supabase:Url"],
+    builder.Configuration["Supabase:Key"],
     new SupabaseOptions
     {
         AutoRefreshToken = true,
         AutoConnectRealtime = true,
     }
 ));
+
+builder.Services.AddScoped<ConversationRepository>();
+builder.Services.AddScoped<MessageRepository>();
+builder.Services.AddScoped<ParticipantsRepository>();
 
 var app = builder.Build();
 

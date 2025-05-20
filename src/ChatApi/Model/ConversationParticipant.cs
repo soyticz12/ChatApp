@@ -1,10 +1,16 @@
 using ChatApi.Interface;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Models;
 
 namespace ChatApi.Model;
-
-public record ConversationParticipant : IConversationParticipant
+[Table("conversation_participants")]
+public class ConversationParticipant : BaseModel, IConversationParticipant
 {
-    public Guid ConversationID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public Guid UserID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public DateTime JoinedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    [PrimaryKey("conversation_id", false)]
+    public Guid ConversationID { get; set; }
+
+    [PrimaryKey("user_id", false)]
+    public Guid UserID { get; set; }
+
+    public DateTime JoinedAt { get; set; }
 }
