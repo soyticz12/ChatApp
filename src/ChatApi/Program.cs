@@ -19,6 +19,8 @@ new Client(
 ));
 
 builder.Services.AddScoped<ConversationRepository>();
+builder.Services.AddScoped<MessageRepository>();
+builder.Services.AddScoped<ParticipantsRepository>();
 
 var app = builder.Build();
 

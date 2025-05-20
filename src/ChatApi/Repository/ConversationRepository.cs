@@ -4,24 +4,17 @@ using Supabase;
 
 namespace ChatApi.Repository;
 
-public class ConversationRepository
+public class ConversationRepository(Client client)
 {
-    private readonly Client _client;
-
-    // Constructor where DI will inject the Client
-    public ConversationRepository(Client client)
-    {
-        _client = client;
-    }
-
+    private readonly Client _client = client;
     public async Task<List<IConversation>> GetConversationsAsync()
-{
-    // Get conversations from Supabase
-    var conversations = await _client.From<Conversation>().Get();
-    
-    // Convert to a List and return
-    return conversations.Models.Cast<IConversation>().ToList();
-}
+    {
+        // Get conversations from Supabase
+        var conversations = await _client.From<Conversation>().Get();
+        
+        // Convert to a List and return
+        return conversations.Models.Cast<IConversation>().ToList();
+    }
 
     public async Task<IConversation> AddConversationAsync(IConversation conversation)
     {

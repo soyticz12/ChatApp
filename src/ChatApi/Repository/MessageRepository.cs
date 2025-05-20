@@ -22,7 +22,7 @@ public class MessageRepository(Client client)
             Id = message.Id,
             Content = message.Content,
             SenderId = message.SenderId,
-            CreatedAt = message.CreatedAt
+            SentAt = message.SentAt
         };
 
         var result = await _client.From<Message>().Insert(new List<Message> { messageModel });
@@ -36,7 +36,7 @@ public class MessageRepository(Client client)
             Id = message.Id,
             Content = message.Content,
             SenderId = message.SenderId,
-            CreatedAt = message.CreatedAt
+            SentAt = message.SentAt
         };
 
         var result = await _client.From<Message>().Where(x => x.Id == messageModel.Id).Update();
